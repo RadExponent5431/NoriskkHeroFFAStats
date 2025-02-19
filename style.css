@@ -1,0 +1,120 @@
+:root {
+    --background-light: #f9f9f9;
+    --background-dark: #121212;
+    --text-light: #333;
+    --text-dark: #f9f9f9;
+    --button-light: #4caf50;
+    --button-hover-light: #45a049;
+    --button-dark: #333;
+    --button-hover-dark: #555;
+    --box-light: #fff;
+    --box-dark: #333;
+    --stat-item-light: #f0f0f0;
+    --stat-item-dark: #333;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-light);
+    color: var(--text-light);
+    transition: all 0.3s ease;
+}
+
+body.dark {
+    background-color: var(--background-dark);
+    color: var(--text-dark);
+}
+
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background: var(--box-light);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background 0.3s ease;
+}
+
+body.dark .container {
+    background: var(--box-dark);
+}
+
+h1 {
+    text-align: center;
+}
+
+.search {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.search input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px 0 0 4px;
+    flex: 1;
+}
+
+.search button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    background-color: var(--button-light);
+    color: white;
+    cursor: pointer;
+    border-radius: 0 4px 4px 0;
+    transition: background 0.3s ease;
+}
+
+.search button:hover {
+    background-color: var(--button-hover-light);
+}
+
+body.dark .search button {
+    background-color: var(--button-dark);
+}
+
+body.dark .search button:hover {
+    background-color: var(--button-hover-dark);
+}
+
+.stats {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.stat-item {
+    background: var(--stat-item-light);
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 6px;
+    transition: background 0.3s ease;
+}
+
+body.dark .stat-item {
+    background: var(--stat-item-dark);
+}
+
+.uuid-result {
+    margin-top: 10px;
+    text-align: center;
+    color: var(--text-light);
+}
+
+body.dark .uuid-result {
+    color: var(--text-dark);
+}
+
+.uuid-result p {
+    background: var(--stat-item-light);
+    padding: 10px;
+    border-radius: 6px;
+}
+
+body.dark .uuid-result p {
+    background: var(--stat-item-dark);
+}

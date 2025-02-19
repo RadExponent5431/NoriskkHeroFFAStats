@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hero FFA Stats</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Hero FFA Stats</h1>
+        <!--<div class="search">
+            <input type="text" id="playerName" placeholder="Spielername eingeben">
+            <button onclick="fetchUUID()">UUID holen</button>
+        </div>
+        <div id="uuidResult" class="uuid-result"></div>-->
+        <div class="search">
+            <input type="text" id="playerId" placeholder="Spieler UUID eingeben">
+            <button onclick="fetchStats()">Stats abrufen</button>
+        </div>
+        <div id="stats" class="stats">
+            <!-- Spielerstatistiken werden hier angezeigt -->
+        </div>
+        <button onclick="toggleDarkMode()">Wechseln zum Darkmode</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
