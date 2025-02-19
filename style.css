@@ -9,6 +9,7 @@
     --button-dark: #555;
     --button-hover-dark: #777;
     --box-light: #fff;
+    --container-light: #fffec3;
     --box-dark: #333;
     --stat-item-light: #f0f0f0;
     --stat-item-dark: #444;
@@ -31,10 +32,10 @@ body.dark {
 
 /* Container */
 .container {
-    max-width: 800px;
-    margin: 50px auto;
+    max-width: 1000px;
+    margin: 25px auto;
     padding: 20px;
-    background: var(--box-light);
+    background: var(--container-light);
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: background 0.3s ease;

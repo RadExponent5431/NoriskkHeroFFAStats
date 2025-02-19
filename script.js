@@ -48,9 +48,9 @@ function displayStats(data, statsContainer) {
                 heroDetails += `
                     <details>
                         <summary>⚙️ ${capitalize(ability)}</summary>
-                        <div>${Object.entries(stats).map(
-                            ([statName, value]) => `<div>${statName}: ${value.experiencePoints} XP</div>`
-                        ).join('')}</div>
+                        <div class="stat-item">${Object.entries(stats).map(
+                            ([statName, value]) => `<div>${capitalize(statName)}: ${value.experiencePoints} XP</div>`
+                        ).join('<br>')}</div>
                     </details>
                 `;
             });
@@ -83,7 +83,13 @@ function applyDarkModePreference() {
 
 // Capitalize first letter
 function capitalize(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
+    // Ersetze alle Unterstriche mit Leerzeichen
+    string = string.replace(/_/g, ' ');
+
+    // Splitte die Zeichenkette in Wörter, dann jedes Wort mit einem Großbuchstaben beginnen
+    string = string.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+
+    return string;
 }
 
 // Apply dark mode preference on page load
