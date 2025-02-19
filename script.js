@@ -1,80 +1,90 @@
-// HGLabor API: Stats abrufen
+// Fetch stats from API
 async function fetchStats() {
     const playerId = document.getElementById('playerId').value.trim();
     const statsContainer = document.getElementById('stats');
 
-    // Überprüfen, ob eine gültige UUID eingegeben wurde
     if (!playerId || !/^[a-f0-9\-]{36}$/.test(playerId)) {
-        statsContainer.innerHTML = '<p>Bitte eine gültige Spieler-UUID eingeben.</p>';
+        statsContainer.innerHTML = `
+            <div class="stat-item error">❌ Bitte eine gültige Spieler-UUID eingeben.</div>
+        `;
         return;
     }
 
     try {
         const response = await fetch(`https://api.hglabor.de/stats/ffa/${playerId}`);
-
-        // Prüfen, ob die Antwort ok ist
-        if (!response.ok) {
-            throw new Error(`Fehler beim Abrufen der Daten: ${response.statusText}`);
-        }
+        if (!response.ok) throw new Error(`Fehler beim Abrufen: ${response.statusText}`);
 
         const data = await response.json();
+        if (!data || !data.playerId) throw new Error('Ungültige Daten von der API.');
 
-        // Überprüfen, ob die Antwort die erwarteten Daten enthält
-        if (!data || !data.playerId) {
-            throw new Error('Ungültige Daten von der API');
-        }
-
-        // Stats anzeigen
         displayStats(data, statsContainer);
-
     } catch (error) {
-        statsContainer.innerHTML = `<p>Fehler: ${error.message}. Bitte überprüfe die UUID.</p>`;
+        statsContainer.innerHTML = `
+            <div class="stat-item error">❌ Fehler: ${error.message}</div>
+        `;
     }
 }
 
-// Anzeige der allgemeinen Stats und der Helden
+// Display stats
 function displayStats(data, statsContainer) {
-    // HTML für allgemeine Stats
     let statsHTML = `
-        <h2>Stats für Spieler: ${data.playerId}</h2>
-        <div class="stat-item">XP: ${data.xp}</div>
-        <div class="stat-item">Kills: ${data.kills}</div>
-        <div class="stat-item">Deaths: ${data.deaths}</div>
-        <div class="stat-item">Höchste Kill-Streak: ${data.highestKillStreak}</div>
-        <div class="stat-item">Aktuelle Kill-Streak: ${data.currentKillStreak}</div>
+        <h2>🎮 Stats für Spieler: <span class="highlight">${data.playerId}</span></h2>
+        <div class="stat-item">🧩 <strong>XP:</strong> ${data.xp}</div>
+        <div class="stat-item">⚔️ <strong>Kills:</strong> ${data.kills}</div>
+        <div class="stat-item">💀 <strong>Deaths:</strong> ${data.deaths}</div>
+        <div class="stat-item">🔥 <strong>Höchste Kill-Streak:</strong> ${data.highestKillStreak}</div>
+        <div class="stat-item">⚡ <strong>Aktuelle Kill-Streak:</strong> ${data.currentKillStreak}</div>
     `;
 
-    // Helden-Daten dynamisch einfügen
     if (data.heroes) {
-        statsHTML += '<h3>Heldenfähigkeiten:</h3>';
+        statsHTML += '<h3>🦸 Heldenfähigkeiten:</h3>';
         Object.entries(data.heroes).forEach(([hero, abilities]) => {
-            statsHTML += `<h4>${capitalize(hero)}</h4>`;
+            let heroDetails = `
+                <details>
+                    <summary>🦸 ${capitalize(hero)}</summary>
+                    <div>
+            `;
             Object.entries(abilities).forEach(([ability, stats]) => {
-                statsHTML += `<p><strong>${capitalize(ability)}:</strong></p>`;
-                Object.entries(stats).forEach(([statName, value]) => {
-                    statsHTML += `
-                        <div class="stat-item">
-                            ${capitalize(statName)}: ${value.experiencePoints} XP
-                        </div>
-                    `;
-                });
+                heroDetails += `
+                    <details>
+                        <summary>⚙️ ${capitalize(ability)}</summary>
+                        <div>${Object.entries(stats).map(
+                            ([statName, value]) => `<div>${statName}: ${value.experiencePoints} XP</div>`
+                        ).join('')}</div>
+                    </details>
+                `;
             });
+            heroDetails += `</div></details>`;
+            statsHTML += heroDetails;
         });
     }
 
-    // HTML-Inhalt nur einmal setzen
     statsContainer.innerHTML = statsHTML;
 }
 
-// Dark-Mode umschalten
+// Toggle dark mode and store preference in a cookie
 function toggleDarkMode() {
     document.body.classList.toggle('dark');
+    const isDarkMode = document.body.classList.contains('dark');
+    document.cookie = `darkMode=${isDarkMode};path=/;max-age=31536000`; // Store for 1 year
 }
 
-// Hilfsfunktion zum Großschreiben der ersten Buchstaben
+// Apply dark mode based on cookie
+function applyDarkModePreference() {
+    const cookies = document.cookie.split(';').reduce((acc, cookie) => {
+        const [key, value] = cookie.trim().split('=');
+        acc[key] = value;
+        return acc;
+    }, {});
+    if (cookies.darkMode === 'true') {
+        document.body.classList.add('dark');
+    }
+}
+
+// Capitalize first letter
 function capitalize(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-// Dark Mode direkt aktivieren
-toggleDarkMode();
+// Apply dark mode preference on page load
+document.addEventListener('DOMContentLoaded', applyDarkModePreference);

@@ -6,12 +6,12 @@
     --text-dark: #f9f9f9;
     --button-light: #4caf50;
     --button-hover-light: #45a049;
-    --button-dark: #333;
-    --button-hover-dark: #555;
+    --button-dark: #555;
+    --button-hover-dark: #777;
     --box-light: #fff;
     --box-dark: #333;
     --stat-item-light: #f0f0f0;
-    --stat-item-dark: #333;
+    --stat-item-dark: #444;
 }
 
 /* Body */
@@ -79,6 +79,36 @@ h1 {
     background-color: var(--button-hover-light);
 }
 
+/* Toggle Dark Mode */
+.toggle-darkmode {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.toggle-darkmode button {
+    padding: 10px;
+    font-size: 16px;
+    background-color: var(--button-dark);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+body.dark .toggle-darkmode button {
+    background-color: var(--button-light);
+}
+
+.toggle-darkmode button:hover {
+    background-color: var(--button-hover-dark);
+}
+
+body.dark .toggle-darkmode button:hover {
+    background-color: var(--button-hover-light);
+}
+
 /* Stats Section */
 .stats {
     margin-top: 20px;
@@ -97,23 +127,26 @@ body.dark .stat-item {
     background: var(--stat-item-dark);
 }
 
-/* UUID Results */
-.uuid-result {
-    margin-top: 10px;
-    text-align: center;
+/* Collapsible Details */
+details {
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: var(--box-light);
+    transition: background 0.3s ease;
+}
+
+body.dark details {
+    background-color: var(--box-dark);
+}
+
+details summary {
+    cursor: pointer;
+    font-weight: bold;
     color: var(--text-light);
 }
 
-body.dark .uuid-result {
+body.dark details summary {
     color: var(--text-dark);
-}
-
-.uuid-result p {
-    background: var(--stat-item-light);
-    padding: 10px;
-    border-radius: 6px;
-}
-
-body.dark .uuid-result p {
-    background: var(--stat-item-dark);
 }

@@ -3,25 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hero FFA Stats</title>
+    <title>HGLabor Stats</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Hero FFA Stats</h1>
-        <!--<div class="search">
-            <input type="text" id="playerName" placeholder="Spielername eingeben">
-            <button onclick="fetchUUID()">UUID holen</button>
-        </div>
-        <div id="uuidResult" class="uuid-result"></div>-->
+        <h1>🎮 HGLabor Spielerstatistiken</h1>
         <div class="search">
-            <input type="text" id="playerId" placeholder="Spieler UUID eingeben">
-            <button onclick="fetchStats()">Stats abrufen</button>
+            <input id="playerId" type="text" placeholder="Spieler-UUID eingeben..." />
+            <button onclick="fetchStats()">Abrufen</button>
         </div>
-        <div id="stats" class="stats">
-            <!-- Spielerstatistiken werden hier angezeigt -->
+        <div class="toggle-darkmode">
+            <button onclick="toggleDarkMode()">🌙/☀️ Modus wechseln</button>
         </div>
-        <button onclick="toggleDarkMode()">Wechseln zum Darkmode</button>
+        <div id="stats" class="stats"></div>
     </div>
     <script src="script.js"></script>
 </body>
