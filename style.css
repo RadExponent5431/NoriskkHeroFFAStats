@@ -1,3 +1,4 @@
+/* Root Variables */
 :root {
     --background-light: #f9f9f9;
     --background-dark: #121212;
@@ -13,6 +14,7 @@
     --stat-item-dark: #333;
 }
 
+/* Body */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -27,6 +29,7 @@ body.dark {
     color: var(--text-dark);
 }
 
+/* Container */
 .container {
     max-width: 800px;
     margin: 50px auto;
@@ -41,10 +44,12 @@ body.dark .container {
     background: var(--box-dark);
 }
 
+/* Headings */
 h1 {
     text-align: center;
 }
 
+/* Search Section */
 .search {
     display: flex;
     justify-content: center;
@@ -74,14 +79,7 @@ h1 {
     background-color: var(--button-hover-light);
 }
 
-body.dark .search button {
-    background-color: var(--button-dark);
-}
-
-body.dark .search button:hover {
-    background-color: var(--button-hover-dark);
-}
-
+/* Stats Section */
 .stats {
     margin-top: 20px;
     text-align: center;
@@ -99,6 +97,7 @@ body.dark .stat-item {
     background: var(--stat-item-dark);
 }
 
+/* UUID Results */
 .uuid-result {
     margin-top: 10px;
     text-align: center;
