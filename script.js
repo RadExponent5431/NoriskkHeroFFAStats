@@ -3,21 +3,45 @@ async function fetchStats() {
     const playerId = document.getElementById('playerId').value.trim();
     const statsContainer = document.getElementById('stats');
 
-    if (!playerId || !/^[a-f0-9\-]{36}$/.test(playerId)) {
+    if (!playerId) {
         statsContainer.innerHTML = `
-            <div class="stat-item error">❌ Bitte eine gültige Spieler-UUID eingeben.</div>
+            <div class="stat-item error">❌ Bitte eine gültige Spieler-UUID oder einen Namen eingeben.</div>
         `;
         return;
     }
 
     try {
-        const response = await fetch(`https://api.hglabor.de/stats/ffa/${playerId}`);
-        if (!response.ok) throw new Error(`Fehler beim Abrufen: ${response.statusText}`);
+        // Prüfen, ob die Eingabe eine UUID ist
+        const isUUID = /^[a-f0-9\-]{36}$/.test(playerId);
+        let uuid = playerId;
 
-        const data = await response.json();
+        if (!isUUID) {
+            const uuidResponse = await fetch(`https://api.ashcon.app/mojang/v2/user/${playerId}`);
+            if (!uuidResponse.ok) throw new Error("Name konnte nicht in UUID umgewandelt werden.");
+            const uuidData = await uuidResponse.json();
+            uuid = uuidData.uuid; 
+        }
+
+        // Versuche, die hglabor.de API mit der UUID abzufragen
+        const hgResponse = await fetch(`https://api.hglabor.de/stats/ffa/${uuid}`);
+        if (hgResponse.status === 404) {
+            throw new Error("Spieler hat noch nicht gespielt.");
+        }
+        if (!hgResponse.ok) {
+            throw new Error(`Fehler beim Abrufen: ${hgResponse.statusText}`);
+        }
+
+        const data = await hgResponse.json();
         if (!data || !data.playerId) throw new Error('Ungültige Daten von der API.');
 
-        displayStats(data, statsContainer);
+        // UUID in Namen umwandeln (für die Anzeige)
+        const nameResponse = await fetch(`https://api.ashcon.app/mojang/v2/user/${uuid}`);
+        if (!nameResponse.ok) throw new Error("UUID konnte nicht in Namen umgewandelt werden.");
+        const nameData = await nameResponse.json();
+        const playerName = nameData.username;
+
+        // Daten anzeigen
+        displayStats(data, statsContainer, playerName);
     } catch (error) {
         statsContainer.innerHTML = `
             <div class="stat-item error">❌ Fehler: ${error.message}</div>
@@ -26,9 +50,9 @@ async function fetchStats() {
 }
 
 // Display stats
-function displayStats(data, statsContainer) {
+function displayStats(data, statsContainer, playerName) {
     let statsHTML = `
-        <h2>🎮 Stats für Spieler: <span class="highlight">${data.playerId}</span></h2>
+        <h2>🎮 Stats für Spieler: <span class="highlight">${playerName}</span></h2>
         <div class="stat-item">🧩 <strong>XP:</strong> ${data.xp}</div>
         <div class="stat-item">⚔️ <strong>Kills:</strong> ${data.kills}</div>
         <div class="stat-item">💀 <strong>Deaths:</strong> ${data.deaths}</div>
