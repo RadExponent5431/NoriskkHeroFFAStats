@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>🎮 HGLabor Spielerstatistiken</h1>
+        <h1>🎮 HGLabor FFA Spielerstatistiken</h1>
         <div class="search">
             <input id="playerId" type="text" placeholder="Spieler-Namen oder UUID eingeben..." />
             <button onclick="fetchStats()">Abrufen</button>
@@ -16,8 +16,26 @@
         <div class="toggle-darkmode">
             <button onclick="toggleDarkMode()">🌙/☀️ Modus wechseln</button>
         </div>
+    </div>
+    <div class="container hidden">
         <div id="stats" class="stats"></div>
     </div>
+    <div class="container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Spieler</th>
+                    <th id="search">XP</th>
+                    <th id="search">Kills</th>
+                    <th id="search">Deaths</th>
+                    <th id="search">Killstreaks</th>
+                    <th id="search">Bounty</th>
+                </tr>
+            </thead>
+            <tbody id="top"></tbody>
+        </table>
+    </div>
+    
     <script src="script.js"></script>
 </body>
 </html>

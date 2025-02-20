@@ -51,6 +51,8 @@ async function fetchStats() {
 
 // Display stats
 function displayStats(data, statsContainer, playerName) {
+    document.getElementById("stats").parentElement.classList.remove("hidden");
+
     let statsHTML = `
         <h2>🎮 Stats für Spieler: <span class="highlight">${playerName}</span></h2>
         <div class="stat-item">🧩 <strong>XP:</strong> ${data.xp}</div>
@@ -115,6 +117,50 @@ function capitalize(string) {
 
     return string;
 }
+
+document.addEventListener("DOMContentLoaded", async function () {
+    const apiUrl = "https://api.hglabor.de/stats/ffa/top?sort=kills&page=1";
+    const tableBody = document.getElementById("top");
+
+    try {
+        const response = await fetch(apiUrl);
+        if (!response.ok) throw new Error("Fehler beim Abrufen der Daten.");
+        const data = await response.json();
+
+        // Begrenze die Daten auf die ersten 15 Einträge
+        const top15 = data.slice(0, 15);
+
+        // Für jeden Spieler die UUID in Namen und Avatar umwandeln
+        for (const player of top15) {
+            const uuid = player.playerId;
+
+            // UUID in Namen umwandeln
+            const nameResponse = await fetch(`https://api.ashcon.app/mojang/v2/user/${uuid}`);
+            if (!nameResponse.ok) throw new Error("Fehler beim Abrufen des Namens.");
+            const nameData = await nameResponse.json();
+            const playerName = nameData.username;
+
+            // Avatar-URL erstellen
+            const avatarUrl = `https://crafatar.com/avatars/${uuid}?size=50`;
+
+            // Neue Tabellenzeile erstellen
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td><img src="${avatarUrl}" alt="${playerName}" class="avatar"> ${playerName}</td>
+                <td>${player.xp}</td>
+                <td>${player.kills}</td>
+                <td>${player.deaths}</td>
+                <td>${player.currentKillStreak} / ${player.highestKillStreak}</td>
+                <td>${player.bounty}</td>
+            `;
+
+            tableBody.appendChild(row);
+        }
+    } catch (error) {
+        console.error("Fehler:", error);
+        tableBody.innerHTML = `<tr><td colspan="6">Fehler beim Laden der Daten: ${error.message}</td></tr>`;
+    }
+});
 
 // Apply dark mode preference on page load
 document.addEventListener('DOMContentLoaded', applyDarkModePreference);
