@@ -32,6 +32,7 @@ body.dark {
 }
 
 /* Container */
+footer,
 .container {
     max-width: 1000px;
     margin: 25px auto;
@@ -40,8 +41,10 @@ body.dark {
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: background 0.3s ease;
+    text-align: center;
 }
 
+body.dark footer,
 body.dark .container {
     background: var(--container-dark);
 }
@@ -49,6 +52,7 @@ body.dark .container {
 /* Headings */
 h1 {
     text-align: center;
+    font-size: 48px;
 }
 
 /* Search Section */

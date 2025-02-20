@@ -157,6 +157,7 @@ function generateHeroesStats(heroes) {
 function toggleDarkMode() {
     document.body.classList.toggle('dark');
     const isDarkMode = document.body.classList.contains('dark');
+    document.getElementById("dM").innerHTML = !isDarkMode ? '🌙 Dark Mode' : '☀️ White Mode'; 
     document.cookie = `darkMode=${isDarkMode};path=/;max-age=31536000`; // Store for 1 year
 }
 
@@ -169,7 +170,8 @@ function applyDarkModePreference() {
     }, {});
     if (cookies.darkMode === 'false') {
         document.body.classList.remove('dark');
-    } 
+        document.getElementById("dM").innerHTML = !document.body.classList.contains('dark') ? '🌙 Dark Mode' : '☀️ White Mode'; 
+    } else document.getElementById("dM").innerHTML = !document.body.classList.contains('dark') ? '🌙 Dark Mode' : '☀️ White Mode'; 
 }
 
 // Capitalize first letter
