@@ -311,6 +311,14 @@ table tbody tr:nth-child(3) {
     color: #cd7f32;
 }
 
+@media (max-width: 768px) {
+    /* Blende alle <th> und <td> ab der 4. Spalte ("Deaths") aus */
+    table th:nth-child(n+4),
+    table td:nth-child(n+4) {
+        display: none;
+    }
+}
+
 .hidden {
     display: none;
 }
