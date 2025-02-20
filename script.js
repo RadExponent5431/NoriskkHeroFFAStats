@@ -186,7 +186,7 @@ function capitalize(string) {
 async function createLeaderboardRow(player, rank) {
     const uuid = player.playerId;
     const playerName = await getPlayerName(uuid);
-    const avatarUrl = `https://crafatar.com/avatars/${uuid}?size=50`;
+    const avatarUrl = `https://crafatar.com/avatars/${uuid}?size=50&overlay`;
 
     const row = document.createElement("tr");
     row.innerHTML = `
