@@ -6,7 +6,7 @@
     <title>HGLabor Stats</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="dark">
     <div class="container">
         <h1>🎮 HGLabor FFA Spielerstatistiken</h1>
         <div class="search">
@@ -17,22 +17,27 @@
             <button onclick="toggleDarkMode()">🌙/☀️ Modus wechseln</button>
         </div>
     </div>
-    <div class="container hidden">
+    <div class="container hidden fade-in">
         <div id="stats" class="stats"></div>
     </div>
-    <div class="container">
+    <div class="container fade-in">
         <table>
             <thead>
                 <tr>
+                    <th>Rang</th>
                     <th>Spieler</th>
-                    <th id="search">XP</th>
-                    <th id="search">Kills</th>
-                    <th id="search">Deaths</th>
-                    <th id="search">Killstreaks</th>
-                    <th id="search">Bounty</th>
+                    <th class="s">XP</th>
+                    <th class="s">Kills</th>
+                    <th class="s">Deaths</th>
+                    <th class="s">Killstreaks</th>
                 </tr>
             </thead>
-            <tbody id="top"></tbody>
+            <tbody id="top">
+                <div id="loading" class="hidden">
+
+                    
+                </div>                
+            </tbody>
         </table>
     </div>
     

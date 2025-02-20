@@ -153,10 +153,6 @@ body.dark details summary {
     color: var(--text-dark);
 }
 
-.hidden {
-    display: none;
-}
-
 .avatar {
     width: 50px;
     height: 50px;
@@ -179,6 +175,7 @@ table {
 
 body.dark table {
     background-color: var(--container-dark);
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
 }
 
 th,
@@ -219,7 +216,6 @@ body.dark tbody tr:hover {
 .avatar {
     width: 40px;
     height: 40px;
-    border-radius: 50%;
     vertical-align: middle;
     margin-right: 10px;
     border: 2px solid var(--button-light);
@@ -295,4 +291,49 @@ details[open] {
 
 body.dark details[open] {
     background-color: rgba(255, 255, 255, 0.05);
+}
+
+
+table tbody tr:nth-child(1) {
+    font-weight: bold;
+    color: gold;
+}
+
+/* Platz 2: Silber */
+table tbody tr:nth-child(2) {
+    font-weight: bold;
+    color: silver;
+}
+
+/* Platz 3: Bronze */
+table tbody tr:nth-child(3) {
+    font-weight: bold;
+    color: #cd7f32;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Animation für das Einfaden */
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
 }
